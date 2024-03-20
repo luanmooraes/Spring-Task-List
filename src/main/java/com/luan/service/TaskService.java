@@ -1,5 +1,6 @@
 package com.luan.service;
 
+import com.luan.exception.TaskNotFoundException;
 import com.luan.model.Task;
 import com.luan.repository.TaskRepository;
 import jakarta.validation.Valid;
@@ -28,26 +29,29 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Optional<Task> findById(@NotNull @Positive Long id){
-        return taskRepository.findById(id);
+    public Task findById(@NotNull @Positive Long id){
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public Optional<Task> update(@NotNull @Positive Long id, @Valid Task task){
+    public Task update(@NotNull @Positive Long id, @Valid Task task){
         return taskRepository.findById(id)
                 .map(itemFound -> {
                     itemFound.setTitle(task.getTitle());
                     itemFound.setDescription(task.getDescription());
                     return taskRepository.save(itemFound);
-                });
+                }).orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public boolean delete(@NotNull @Positive Long id){
-        return taskRepository.findById(id)
+    public void delete(@NotNull @Positive Long id){
+        //taskRepository.delete(taskRepository.findById(id))
+        //        .orElseThrow(() -> new TaskNotFoundException(id));
+        taskRepository.findById(id)
                 .map(itemFound -> {
                     taskRepository.deleteById(id);
                     return true;
                 })
-                .orElse(false);
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
 }

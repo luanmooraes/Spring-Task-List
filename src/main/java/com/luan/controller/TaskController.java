@@ -6,7 +6,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,25 +34,19 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findById(@PathVariable @NotNull @Positive Long id){
-        return taskService.findById(id)
-                .map(itemFound -> ResponseEntity.ok().body(itemFound))
-                .orElse(ResponseEntity.notFound().build());
+    public Task findById(@PathVariable @NotNull @Positive Long id){
+        return taskService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Task task){
-        return taskService.update(id, task)
-                .map(itemFound -> ResponseEntity.ok().body(itemFound))
-                .orElse(ResponseEntity.notFound().build());
+    public Task update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Task task){
+        return taskService.update(id, task);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id){
-        if(taskService.delete(id)) {
-            return ResponseEntity.noContent().<Void>build();
-        }
-        return ResponseEntity.noContent().<Void>build();
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull @Positive Long id){
+        taskService.delete(id);
     }
 
 
