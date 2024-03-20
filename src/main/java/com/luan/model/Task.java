@@ -2,6 +2,8 @@ package com.luan.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -12,8 +14,14 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("_id")
     private Long id;
-    @Column(length = 200, nullable = false)
+
+    @NotBlank
+    @NotNull
+    @Column(length = 100, nullable = false)
     private String title;
+
+    @NotBlank
+    @NotNull
     @Column(length = 200, nullable = false)
     private String description;
 

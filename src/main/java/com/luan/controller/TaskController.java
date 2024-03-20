@@ -2,13 +2,18 @@ package com.luan.controller;
 
 import com.luan.model.Task;
 import com.luan.repository.TaskRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/tasks")
 @AllArgsConstructor
@@ -22,14 +27,14 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Task create(@RequestBody Task task){
+    public Task create(@RequestBody @Valid Task task){
         return taskRepository.save(task);
         //return ResponseEntity.status(HttpStatus.CREATED)
         //        .body(taskRepository.save(task));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findById(@PathVariable Long id){
+    public ResponseEntity<Task> findById(@PathVariable @NotNull @Positive Long id){
         return taskRepository.findById(id)
                 .map(itemFound -> ResponseEntity.ok().body(itemFound))
                 .orElse(ResponseEntity.notFound().build());
@@ -45,7 +50,7 @@ public class TaskController {
      *              Retorna HTTP 404 Not Found se a tarefa com o ID fornecido não é encontrada.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task task){
+    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody @Valid Task task){
         return taskRepository.findById(id)
                 .map(itemFound -> {
                     itemFound.setTitle(task.getTitle());
@@ -57,7 +62,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id){
         return taskRepository.findById(id)
                 .map(itemFound -> {
                     taskRepository.deleteById(id);
