@@ -1,12 +1,18 @@
 package com.luan.service;
 
 import com.luan.dto.TaskDTO;
+import com.luan.dto.TaskPageDTO;
 import com.luan.dto.mapper.TaskMapper;
 import com.luan.exception.TaskNotFoundException;
+import com.luan.model.Task;
 import com.luan.repository.TaskRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -25,11 +31,11 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
-    public List<TaskDTO> list(){
-        return taskRepository.findAll()
-                .stream()
-                .map(task -> taskMapper.toDTO(task))
-                .collect(Collectors.toList());
+    public TaskPageDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize){
+        Page<Task> pageTask = taskRepository.findAll(PageRequest.of(page, pageSize));
+        List<TaskDTO> tasks = pageTask.get().map(taskMapper::toDTO).collect(Collectors.toList());
+        return new TaskPageDTO(tasks, pageTask.getTotalElements(), pageTask.getTotalPages());
+
     }
 
     public TaskDTO create(@Valid @NotNull TaskDTO task){

@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -28,5 +31,5 @@ public class Task {
     @Column(length = 200, nullable = false)
     private String description;
 
-    private String expirationDate;
+    private Date expirationDate;
 }
