@@ -1,6 +1,6 @@
 package com.luan.controller;
 
-import com.luan.model.Task;
+import com.luan.dto.TaskDTO;
 import com.luan.service.TaskService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -23,23 +23,23 @@ public class TaskController {
     }
 
     @GetMapping
-    public @ResponseBody List<Task> list(){
+    public @ResponseBody List<TaskDTO> list(){
         return taskService.list();
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Task create(@RequestBody @Valid Task task){
+    public TaskDTO create(@RequestBody @Valid TaskDTO task){
         return taskService.create(task);
     }
 
     @GetMapping("/{id}")
-    public Task findById(@PathVariable @NotNull @Positive Long id){
+    public TaskDTO findById(@PathVariable @NotNull @Positive Long id){
         return taskService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public Task update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Task task){
+    public TaskDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid @NotNull TaskDTO task){
         return taskService.update(id, task);
     }
 

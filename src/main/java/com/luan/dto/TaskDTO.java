@@ -11,7 +11,7 @@ public record TaskDTO(
         @NotBlank
         @NotNull
         @Size(min = 5, max = 100)
-        String name,
+        String title,
         @NotBlank
         @NotNull
         @Size(min = 10, max = 200)
