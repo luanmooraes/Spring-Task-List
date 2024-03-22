@@ -46,15 +46,15 @@ public class TaskService {
 
     public TaskDTO findById(@NotNull @Positive Long id){
         return taskRepository.findById(id)
-                .map(task -> taskMapper.toDTO(task))
+                .map(taskMapper::toDTO)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     public TaskDTO update(@NotNull @Positive Long id, @Valid @NotNull TaskDTO task){
         return taskRepository.findById(id)
                 .map(itemFound -> {
-                    itemFound.setTitle(task.getTitle());
-                    itemFound.setDescription(task.getDescription());
+                    itemFound.setTitle(task.title());
+                    itemFound.setDescription(task.description());
                     return taskMapper.toDTO(taskRepository.save(itemFound));
                 }).orElseThrow(() -> new TaskNotFoundException(id));
     }

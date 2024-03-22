@@ -33,15 +33,12 @@ class TaskControllerTest {
 
     @Test
     void testList() {
-        //List<TaskDTO> tasks = new ArrayList<>(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana");
         LocalDate expirationDate = LocalDate.of(2024, 3, 25);
         List<TaskDTO> tasks = new ArrayList<>();
         tasks.add(new TaskDTO(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana", expirationDate));
-        //tasks.add(new TaskDTO("Task 2", "Description 2"));
-        //tasks.add(new TaskDTO("Task 3", "Description 3"));
+
         int pageNumber = 1;
         int totalPages = 5;
-
 
         TaskPageDTO pageDTO = new TaskPageDTO(tasks, pageNumber, totalPages);
         when(taskService.list(anyInt(), anyInt())).thenReturn(pageDTO);
@@ -87,7 +84,5 @@ class TaskControllerTest {
     @Test
     void testDelete() {
         taskController.delete(1L);
-
-        // Verify that taskService.delete(id) was called once
     }
 }

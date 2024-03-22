@@ -2,6 +2,7 @@ package com.luan.dto.mapper;
 
 import com.luan.dto.TaskDTO;
 import com.luan.model.Task;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,12 +16,12 @@ public class TaskMapper {
             return null;
         }
         Task task = new Task();
-        if (taskDTO.getId() != null) {
-            task.setId(taskDTO.getId());
+        if (taskDTO.id() != null) {
+            task.setId(taskDTO.id());
         }
-        task.setTitle(taskDTO.getTitle());
-        task.setDescription(taskDTO.getDescription());
-        task.setExpirationDate(taskDTO.getExpirationDate());
+        task.setTitle(taskDTO.title());
+        task.setDescription(taskDTO.description());
+        task.setExpirationDate(taskDTO.expirationDate());
         return task;
     }
 
