@@ -13,6 +13,8 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -32,10 +34,10 @@ public class TaskService {
     }
 
     public TaskPageDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize){
-        Page<Task> pageTask = taskRepository.findAll(PageRequest.of(page, pageSize));
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("expirationDate").ascending());
+        Page<Task> pageTask = taskRepository.findAll(pageable);
         List<TaskDTO> tasks = pageTask.get().map(taskMapper::toDTO).collect(Collectors.toList());
         return new TaskPageDTO(tasks, pageTask.getTotalElements(), pageTask.getTotalPages());
-
     }
 
     public TaskDTO create(@Valid @NotNull TaskDTO task){
@@ -51,8 +53,8 @@ public class TaskService {
     public TaskDTO update(@NotNull @Positive Long id, @Valid @NotNull TaskDTO task){
         return taskRepository.findById(id)
                 .map(itemFound -> {
-                    itemFound.setTitle(task.title());
-                    itemFound.setDescription(task.description());
+                    itemFound.setTitle(task.getTitle());
+                    itemFound.setDescription(task.getDescription());
                     return taskMapper.toDTO(taskRepository.save(itemFound));
                 }).orElseThrow(() -> new TaskNotFoundException(id));
     }

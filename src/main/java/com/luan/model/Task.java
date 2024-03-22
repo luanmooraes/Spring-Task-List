@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -32,5 +33,6 @@ public class Task {
     @Column(length = 200, nullable = false)
     private String description;
 
+    @NotNull
     private LocalDate expirationDate;
 }

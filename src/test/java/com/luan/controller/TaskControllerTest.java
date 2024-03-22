@@ -11,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -31,7 +33,17 @@ class TaskControllerTest {
 
     @Test
     void testList() {
-        TaskPageDTO pageDTO = new TaskPageDTO();
+        //List<TaskDTO> tasks = new ArrayList<>(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana");
+        LocalDate expirationDate = LocalDate.of(2024, 3, 25);
+        List<TaskDTO> tasks = new ArrayList<>();
+        tasks.add(new TaskDTO(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana", expirationDate));
+        //tasks.add(new TaskDTO("Task 2", "Description 2"));
+        //tasks.add(new TaskDTO("Task 3", "Description 3"));
+        int pageNumber = 1;
+        int totalPages = 5;
+
+
+        TaskPageDTO pageDTO = new TaskPageDTO(tasks, pageNumber, totalPages);
         when(taskService.list(anyInt(), anyInt())).thenReturn(pageDTO);
 
         TaskPageDTO result = taskController.list(0, 10);
@@ -63,10 +75,11 @@ class TaskControllerTest {
 
     @Test
     void testUpdate() {
-        TaskDTO taskDTO = new TaskDTO(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana", "2024/03/25");
+        LocalDate expirationDate = LocalDate.of(2024, 3, 25);
+        TaskDTO taskDTO = new TaskDTO(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana", expirationDate);
         when(taskService.update(anyLong(), any(TaskDTO.class))).thenReturn(taskDTO);
 
-        TaskDTO result = taskController.update(1L, new TaskDTO());
+        TaskDTO result = taskController.update(1L, new TaskDTO(1L, "Comprar mantimentos", "Comprar frutas, legumes e pão para a semana", expirationDate));
 
         assertEquals(taskDTO, result);
     }

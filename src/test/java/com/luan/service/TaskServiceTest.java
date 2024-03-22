@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -37,7 +38,7 @@ class TaskServiceTest {
     void testList() {
         // Mocking
         Page<Task> mockPage = mock(Page.class);
-        when(mockPage.get()).thenReturn(Collections.singletonList(new Task()));
+        when(mockPage.get()).thenReturn((Stream<Task>) Collections.singletonList(new Task()));
         when(mockPage.getTotalElements()).thenReturn(1L);
         when(mockPage.getTotalPages()).thenReturn(1);
 
@@ -70,7 +71,7 @@ class TaskServiceTest {
         // Assertions
         assertNotNull(result);
         assertEquals(taskDTO, result);
-        assertEquals(taskDTO, result);
+        //assertEquals(taskDTO, result);
     }
 
     @Test

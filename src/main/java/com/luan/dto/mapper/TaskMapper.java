@@ -15,12 +15,12 @@ public class TaskMapper {
             return null;
         }
         Task task = new Task();
-        if (taskDTO.id() != null) {
-            task.setId(taskDTO.id());
+        if (taskDTO.getId() != null) {
+            task.setId(taskDTO.getId());
         }
-        task.setTitle(taskDTO.title());
-        task.setDescription(taskDTO.description());
-        task.setExpirationDate(taskDTO.expirationDate());
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setExpirationDate(taskDTO.getExpirationDate());
         return task;
     }
 
