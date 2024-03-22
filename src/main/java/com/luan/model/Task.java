@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -31,5 +32,5 @@ public class Task {
     @Column(length = 200, nullable = false)
     private String description;
 
-    private String expirationDate;
+    private LocalDate expirationDate;
 }

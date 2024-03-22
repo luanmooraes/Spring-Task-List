@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
+
 public record TaskDTO(
         @JsonProperty("_id")
         Long id,
@@ -16,5 +18,5 @@ public record TaskDTO(
         @NotNull
         @Size(min = 10, max = 200)
         String description,
-        String expirationDate) {
+        LocalDate expirationDate) {
 }
