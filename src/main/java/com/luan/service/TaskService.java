@@ -21,18 +21,32 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe de serviço para gerenciar tarefas.
+ */
 @Validated
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
 
+    /**
+     * Construtor para TaskService.
+     * @param taskRepository O repositório para tarefas.
+     * @param taskMapper O mapeador para converter entre entidades Task e DTOs.
+     */
     public TaskService(TaskRepository taskRepository,
                        TaskMapper taskMapper){
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
     }
 
+    /**
+     * Recupera uma página de tarefas.
+     * @param page O número da página (baseado em 0).
+     * @param pageSize O tamanho da página.
+     * @return Um objeto TaskPageDTO contendo a lista de tarefas e informações de paginação.
+     */
     public TaskPageDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize){
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("expirationDate").ascending());
         Page<Task> pageTask = taskRepository.findAll(pageable);
@@ -40,16 +54,34 @@ public class TaskService {
         return new TaskPageDTO(tasks, pageTask.getTotalElements(), pageTask.getTotalPages());
     }
 
+    /**
+     * Cria uma nova tarefa.
+     * @param task O objeto TaskDTO representando a tarefa a ser criada.
+     * @return A tarefa criada como um objeto TaskDTO.
+     */
     public TaskDTO create(@Valid @NotNull TaskDTO task){
         return taskMapper.toDTO(taskRepository.save(taskMapper.toEntity(task)));
     }
 
+    /**
+     * Recupera uma tarefa pelo seu ID.
+     * @param id O ID da tarefa a ser recuperada.
+     * @return A tarefa como um objeto TaskDTO.
+     * @throws TaskNotFoundException se a tarefa com o ID especificado não for encontrada.
+     */
     public TaskDTO findById(@NotNull @Positive Long id){
         return taskRepository.findById(id)
                 .map(taskMapper::toDTO)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
+    /**
+     * Atualiza uma tarefa existente.
+     * @param id O ID da tarefa a ser atualizada.
+     * @param task O objeto TaskDTO atualizado.
+     * @return A tarefa atualizada como um objeto TaskDTO.
+     * @throws TaskNotFoundException se a tarefa com o ID especificado não for encontrada.
+     */
     public TaskDTO update(@NotNull @Positive Long id, @Valid @NotNull TaskDTO task){
         return taskRepository.findById(id)
                 .map(itemFound -> {
@@ -59,9 +91,12 @@ public class TaskService {
                 }).orElseThrow(() -> new TaskNotFoundException(id));
     }
 
+    /**
+     * Exclui uma tarefa pelo seu ID.
+     * @param id O ID da tarefa a ser excluída.
+     * @throws TaskNotFoundException se a tarefa com o ID especificado não for encontrada.
+     */
     public void delete(@NotNull @Positive Long id){
-        //taskRepository.delete(taskRepository.findById(id))
-        //        .orElseThrow(() -> new TaskNotFoundException(id));
         taskRepository.findById(id)
                 .map(itemFound -> {
                     taskRepository.deleteById(id);
@@ -69,5 +104,4 @@ public class TaskService {
                 })
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
-
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.Length;
@@ -21,18 +22,19 @@ public class Task {
     @JsonProperty("_id")
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O titulo é obrigatório")
     @NotNull
     @Size(min = 5, max = 100)
     @Column(length = 100, nullable = false)
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "A descrição é obrigatória")
     @NotNull
     @Size(min = 10, max = 200)
     @Column(length = 200, nullable = false)
     private String description;
 
     @NotNull
+    @Past
     private LocalDate expirationDate;
 }
