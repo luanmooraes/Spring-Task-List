@@ -1,0 +1,19 @@
+{
+  "tarefas": [
+    {
+      "title": "Comprar mantimentos",
+      "description": "Comprar frutas, legumes e pão para a semana",
+      "expirationDate": "2025-03-25"
+    },
+    {
+      "title": "Estudar para o exame de matemática",
+      "description": "Revisar trigonometria e álgebra linear",
+      "expirationDate": "2024-07-10"
+    },
+    {
+      "title": "Fazer exercícios físicos",
+      "description": "Caminhar por 30 minutos",
+      "expirationDate": "2024-03-21"
+    }
+  ]
+}
