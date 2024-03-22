@@ -31,5 +31,5 @@ public class Task {
     @Column(length = 200, nullable = false)
     private String description;
 
-    private Date expirationDate;
+    private String expirationDate;
 }
