@@ -2,6 +2,7 @@ package com.luan.dto.mapper;
 
 import com.luan.dto.TaskDTO;
 import com.luan.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class TaskMapper {
      * @param task Entidade Task a ser convertida.
      * @return Objeto TaskDTO resultante da conversão.
      */
+
     public TaskDTO toDTO(Task task) {
         return new TaskDTO(task.getId(), task.getTitle(), task.getDescription(), task.getExpirationDate());
     }
@@ -26,6 +28,7 @@ public class TaskMapper {
      * @param taskDTO DTO TaskDTO a ser convertido.
      * @return Objeto Task resultante da conversão.
      */
+
     public Task toEntity(TaskDTO taskDTO) {
         if (taskDTO == null) {
             return null;

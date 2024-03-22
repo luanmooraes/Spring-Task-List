@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,7 @@ public class TaskService {
      * @param taskRepository O repositório para tarefas.
      * @param taskMapper O mapeador para converter entre entidades Task e DTOs.
      */
+    @Autowired
     public TaskService(TaskRepository taskRepository,
                        TaskMapper taskMapper){
         this.taskRepository = taskRepository;

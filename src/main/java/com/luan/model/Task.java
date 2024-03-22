@@ -35,6 +35,5 @@ public class Task {
     private String description;
 
     @NotNull
-    @Past
     private LocalDate expirationDate;
 }
