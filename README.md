@@ -1,4 +1,4 @@
-# Projeto Spring Java
+# Projeto Spring Java - TaskApp
 
 Este é um projeto que utiliza o framework Spring para Java e 
 demonstra como criar uma API de Tarefas usando esse framework. Ele inclui configurações básicas, controladores e serviços no seu desenvolvimento.
@@ -63,8 +63,8 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir problemas (issue
 
 ## Autor
 
-Nome: Luan Moraes 
-E-mail: luansilvamoraess@gmail.com
+- Nome: Luan Moraes 
+- E-mail: luansilvamoraess@gmail.com
 
 ## Licença
 
