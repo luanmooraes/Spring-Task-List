@@ -36,7 +36,6 @@ public class TaskService {
      * @param taskRepository O repositório para tarefas.
      * @param taskMapper O mapeador para converter entre entidades Task e DTOs.
      */
-    @Autowired
     public TaskService(TaskRepository taskRepository,
                        TaskMapper taskMapper){
         this.taskRepository = taskRepository;
