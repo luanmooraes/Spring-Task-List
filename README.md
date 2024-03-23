@@ -1,7 +1,7 @@
 # Projeto Spring Java - TaskApp
 
 Este é um projeto que utiliza o framework Spring para Java e 
-demonstra como criar uma API de Tarefas usando esse framework. Ele inclui configurações básicas, controladores e serviços no seu desenvolvimento.
+demonstra a criação de uma API de Tarefas. Ele inclui configurações básicas, controladores e serviços no seu desenvolvimento.
 
 ## Descrição
 
@@ -56,6 +56,14 @@ O TaskApp é um sistema de gerenciamento de tarefas projetado para facilitar a o
 2. Execute os testes JUnit clicando com o botão direito no diretório de testes e selecionando "Run All Tests" (ou similar, dependendo do IDE).
 
 3. Os resultados dos testes serão exibidos no console do IDE.
+
+## Testes dos EndPoints com Postman
+
+1. Na IDE há um arquivo chamado `json.text` com o json usado nos testes do Postman. Faça a instalação do Postman para fazer os testes
+
+2. Clique nesse arquivo e faça os testes dos endpoints.
+
+3. Os resultados dos testes irão aparecer no Postman.
 
 ## Contribuição
 
